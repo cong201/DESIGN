@@ -1,9 +1,12 @@
+import Featured from "../../components/Featured/Featured"
+import TrustBy from "../../components/TrustBy/TrustBy"
 import "./home.scss"
 
 const Home = () => {
     return (
         <div>
-            home
+            <Featured />
+            <TrustBy />
         </div>
     )
 }
