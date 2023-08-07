@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import "./navbar.scss"
 import React, { useEffect, useState } from "react"
 
@@ -6,6 +6,8 @@ const Navbar = () => {
 
     const [active, setActive] = useState(false)
     const [open, setOpen] = useState(false)
+
+    const { pathname } = useLocation()
 
     const isActive = () => {
         window.scrollY > 0 ? setActive(true) : setActive(false)
@@ -25,13 +27,13 @@ const Navbar = () => {
     }
 
     return (
-        <div className={active ? "navbar active" : "navbar"}>
+        <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
             <div className="container">
                 <div className="logo">
-                    {/* <Link to={'/'}> */}
-                    <span className="text">DESIGN</span>
-                    <span className="dot">.</span>
-                    {/* </Link> */}
+                    <Link to={'/'} className="link">
+                        <span className="text">DESIGN</span>
+                        <span className="dot">.</span>
+                    </Link>
                 </div>
                 <div className="links">
                     <span>Design business</span>
@@ -47,29 +49,34 @@ const Navbar = () => {
                             {open && <div className="options">
                                 {currentUser?.isSeller && (
                                     <>
-                                        <span>User</span>
-                                        <span>Add new User</span>
+                                        <Link to={'/myUser'} className="link" >User</Link>
+                                        <Link to={'/add'} className="link">Add new User</Link>
                                     </>
                                 )}
-                                <span>Oders</span>
-                                <span>Messages</span>
-                                <span>Logout</span>
+                                <Link to={'/order'} className="link">Oders</Link>
+                                <Link to={'/message'} className="link">Messages</Link>
+                                <Link to={'/'} className="link">Logout</Link>
                             </div>}
                         </div>
                     )}
                 </div>
             </div>
-            {
-                active && (
-                    <>
-                        <hr />
-                        <div className="menu">
-                            <span>Test 1</span>
-                            <span>Test 2</span>
-                        </div>
-                    </>
-                )
-            }
+            {(active || pathname !== "/") && (
+                <>
+                    <hr />
+                    <div className="menu">
+                        <Link className="link" to={'/'}>Graphics & Design</Link>
+                        <Link className="link" to={'/'}>Video & Animation</Link>
+                        <Link className="link" to={'/'}>Writing & Translation</Link>
+                        <Link className="link" to={'/'}>AI Service</Link>
+                        <Link className="link" to={'/'}>Digital Marketing</Link>
+                        <Link className="link" to={'/'}>Music & Audio</Link>
+                        <Link className="link" to={'/'}>Programing & Tech</Link>
+                        <Link className="link" to={'/'}>Business</Link>
+                        <Link className="link" to={'/'}>LifeStyle</Link>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
